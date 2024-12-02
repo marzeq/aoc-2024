@@ -9,11 +9,11 @@ import (
 	"github.com/marzeq/aoc-2024/shared"
 )
 
-func parse(day int) ([]int, []int) {
+func parseInput(lines []string) ([]int, []int) {
 	nums1 := []int{}
 	nums2 := []int{}
 
-	for _, line := range shared.GetLines(day) {
+	for _, line := range lines {
 		if line == "" {
 			continue
 		}
@@ -30,7 +30,7 @@ func parse(day int) ([]int, []int) {
 	return nums1, nums2
 }
 
-func p1(nums1 []int, nums2 []int) int {
+func part1(nums1 []int, nums2 []int) int {
 	slices.Sort(nums1)
 	slices.Sort(nums2)
 
@@ -45,7 +45,7 @@ func p1(nums1 []int, nums2 []int) int {
 	return res
 }
 
-func p2(nums1 []int, nums2 []int) int {
+func part2(nums1 []int, nums2 []int) int {
 	occurmap := make(map[int]int)
 
 	for _, n2 := range nums2 {
@@ -61,14 +61,14 @@ func p2(nums1 []int, nums2 []int) int {
 	return res
 }
 
-func Run(part int) {
-	nums1, nums2 := parse(1)
+func Run(part int, lines []string) {
+	nums1, nums2 := parseInput(lines)
 	var res int
 
 	if part == 1 {
-		res = p1(nums1, nums2)
+		res = part1(nums1, nums2)
 	} else {
-		res = p2(nums1, nums2)
+		res = part2(nums1, nums2)
 	}
 
 	fmt.Println(res)

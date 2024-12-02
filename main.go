@@ -6,6 +6,8 @@ import (
 	"strconv"
 
 	"github.com/marzeq/aoc-2024/day1"
+	"github.com/marzeq/aoc-2024/day2"
+	"github.com/marzeq/aoc-2024/shared"
 )
 
 func main() {
@@ -25,6 +27,8 @@ func main() {
 
 	switch day {
 	case 1:
-		day1.Run(part)
+		day1.Run(part, shared.GetLines(day))
+	case 2:
+		day2.Run(part, shared.GetLines(day))
 	}
 }
