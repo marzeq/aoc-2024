@@ -1,7 +1,6 @@
 package day2
 
 import (
-	"fmt"
 	"strconv"
 	"strings"
 
@@ -12,10 +11,6 @@ func parseInput(lines []string) [][]int {
 	reports := [][]int{}
 
 	for _, line := range lines {
-		if line == "" {
-			continue
-		}
-
 		report := []int{}
 
 		split := strings.Split(line, " ")
@@ -127,16 +122,12 @@ func part2(reports [][]int) int {
 	return res
 }
 
-func Run(part int, lines []string) {
+func Run(part int, lines []string) int {
 	reports := parseInput(lines)
 
-	var res int
-
 	if part == 1 {
-		res = part1(reports)
+		return part1(reports)
 	} else {
-		res = part2(reports)
+		return part2(reports)
 	}
-
-	fmt.Println(res)
 }

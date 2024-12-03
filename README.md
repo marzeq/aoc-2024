@@ -5,8 +5,8 @@
 ### solution status
 
 - **day1: p1 (x), p2 (x)**
-- day2: p1 ( ), p2 ( )
-- day3: p1 ( ), p2 ( )
+- **day2: p1 (x), p2 (x)**
+- **day3: p1 (x), p2 (x)**
 - day4: p1 ( ), p2 ( )
 - day5: p1 ( ), p2 ( )
 - day6: p1 ( ), p2 ( )

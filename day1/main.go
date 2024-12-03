@@ -1,7 +1,6 @@
 package day1
 
 import (
-	"fmt"
 	"slices"
 	"strconv"
 	"strings"
@@ -14,10 +13,6 @@ func parseInput(lines []string) ([]int, []int) {
 	nums2 := []int{}
 
 	for _, line := range lines {
-		if line == "" {
-			continue
-		}
-
 		linespl := strings.Split(line, "   ")
 
 		num1, _ := strconv.Atoi(linespl[0])
@@ -61,15 +56,12 @@ func part2(nums1 []int, nums2 []int) int {
 	return res
 }
 
-func Run(part int, lines []string) {
+func Run(part int, lines []string) int {
 	nums1, nums2 := parseInput(lines)
-	var res int
 
 	if part == 1 {
-		res = part1(nums1, nums2)
+		return part1(nums1, nums2)
 	} else {
-		res = part2(nums1, nums2)
+		return part2(nums1, nums2)
 	}
-
-	fmt.Println(res)
 }

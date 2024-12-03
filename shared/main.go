@@ -38,5 +38,6 @@ func GetLines(day int) []string {
 		panic(fmt.Sprintf("Create file %s to run", fname))
 	}
 
-	return strings.Split(string(f), "\n")
+	ret := strings.Split(string(f), "\n")
+	return ret[:len(ret)-1]
 }
