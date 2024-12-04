@@ -8,6 +8,7 @@ import (
 	"github.com/marzeq/aoc-2024/day1"
 	"github.com/marzeq/aoc-2024/day2"
 	"github.com/marzeq/aoc-2024/day3"
+	"github.com/marzeq/aoc-2024/day4"
 	"github.com/marzeq/aoc-2024/shared"
 )
 
@@ -26,14 +27,18 @@ func main() {
 		panic("Invalid part arg")
 	}
 
+	lines := shared.GetLines(day)
+
 	var res int
 	switch day {
 	case 1:
-		res = day1.Run(part, shared.GetLines(day))
+		res = day1.Run(part, lines)
 	case 2:
-		res = day2.Run(part, shared.GetLines(day))
+		res = day2.Run(part, lines)
 	case 3:
-		res = day3.Run(part, shared.GetLines(day))
+		res = day3.Run(part, lines)
+	case 4:
+		res = day4.Run(part, lines)
 	default:
 		res = 0
 	}
