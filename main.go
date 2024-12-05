@@ -9,6 +9,7 @@ import (
 	"github.com/marzeq/aoc-2024/day2"
 	"github.com/marzeq/aoc-2024/day3"
 	"github.com/marzeq/aoc-2024/day4"
+	"github.com/marzeq/aoc-2024/day5"
 	"github.com/marzeq/aoc-2024/shared"
 )
 
@@ -39,6 +40,8 @@ func main() {
 		res = day3.Run(part, lines)
 	case 4:
 		res = day4.Run(part, lines)
+	case 5:
+		res = day5.Run(part, lines)
 	default:
 		res = 0
 	}
