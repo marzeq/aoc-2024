@@ -1,5 +1,7 @@
 package day6
 
+import "github.com/marzeq/aoc-2024/shared"
+
 type (
 	Map [][]bool
 	Pos struct {
@@ -43,6 +45,26 @@ const (
 	WEST
 )
 
+func move(labmap Map, currentPos Pos, currentDirection Direction) (bool, Pos, Direction) {
+	newPos := getNewPos(currentPos, currentDirection)
+	newDirection := currentDirection
+
+	if !isPosInsideMap(newPos, labmap) {
+		return false, Pos{}, NORTH
+	}
+
+	if !labmap[newPos.Y][newPos.X] {
+		newDirection = getNextDirection(currentDirection)
+		newPos = getNewPos(currentPos, newDirection)
+
+		if !labmap[newPos.Y][newPos.X] {
+			return move(labmap, currentPos, newDirection)
+		}
+	}
+
+	return true, newPos, newDirection
+}
+
 func getNextDirection(direction Direction) Direction {
 	switch direction {
 	case NORTH:
@@ -82,18 +104,13 @@ func simulateGuardMovement(labmap Map, startpos Pos) VisitedMap {
 	for {
 		visited[currentPos] = true
 
-		newPos := getNewPos(currentPos, currentDirection)
+		validmove, newPos, newDirection := move(labmap, currentPos, currentDirection)
 
-		if !isPosInsideMap(newPos, labmap) {
+		if !validmove {
 			break
 		}
-
-		if labmap[newPos.Y][newPos.X] {
-			currentPos = newPos
-		} else {
-			currentDirection = getNextDirection(currentDirection)
-			currentPos = getNewPos(currentPos, currentDirection)
-		}
+		currentPos = newPos
+		currentDirection = newDirection
 	}
 
 	return visited
@@ -103,8 +120,48 @@ func part1(labmap Map, startpos Pos) int {
 	return len(simulateGuardMovement(labmap, startpos))
 }
 
+func isGuardStuckInLoop(labmap_og Map, startpos Pos, obstruction Pos) bool {
+	labmap := shared.Copy2DArray(labmap_og)
+	labmap[obstruction.Y][obstruction.X] = false
+	visitedSequence := map[Pos]map[Direction]bool{}
+	currentPos := startpos
+	currentDirection := NORTH
+
+	for {
+		if _, exists := visitedSequence[currentPos]; !exists {
+			visitedSequence[currentPos] = make(map[Direction]bool)
+		}
+		if visitedSequence[currentPos][currentDirection] {
+			return true
+		}
+
+		visitedSequence[currentPos][currentDirection] = true
+
+		validmove, newPos, newDirection := move(labmap, currentPos, currentDirection)
+
+		if !validmove {
+			return false
+		}
+		currentPos = newPos
+		currentDirection = newDirection
+	}
+}
+
 func part2(labmap Map, startpos Pos) int {
-	return 0
+	visited := simulateGuardMovement(labmap, startpos)
+
+	loopCount := 0
+	for pos := range visited {
+		if pos == startpos {
+			continue
+		}
+
+		if isGuardStuckInLoop(labmap, startpos, pos) {
+			loopCount++
+		}
+	}
+
+	return loopCount
 }
 
 func Run(part int, lines []string) int {

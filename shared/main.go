@@ -41,3 +41,12 @@ func GetLines(day int) []string {
 	ret := strings.Split(string(f), "\n")
 	return ret[:len(ret)-1]
 }
+
+func Copy2DArray[T any](original [][]T) [][]T {
+	cpy := make([][]T, len(original))
+	for i := range original {
+		cpy[i] = make([]T, len(original[i]))
+		copy(cpy[i], original[i])
+	}
+	return cpy
+}

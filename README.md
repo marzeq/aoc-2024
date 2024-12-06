@@ -9,7 +9,7 @@
 - **day3: p1 (x), p2 (x)**
 - **day4: p1 (x), p2 (x)**
 - **day5: p1 (x), p2 (x)**
-- *day6: p1 (x), p2 ( )*
+- **day6: p1 (x), p2 (x)**
 - day7: p1 ( ), p2 ( )
 - day8: p1 ( ), p2 ( )
 - day9: p1 ( ), p2 ( )
