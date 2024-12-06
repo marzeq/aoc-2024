@@ -1,6 +1,10 @@
 package day6
 
-import "github.com/marzeq/aoc-2024/shared"
+import (
+	"sync"
+
+	"github.com/marzeq/aoc-2024/shared"
+)
 
 type (
 	Map [][]bool
@@ -147,7 +151,7 @@ func isGuardStuckInLoop(labmap_og Map, startpos Pos, obstruction Pos) bool {
 	}
 }
 
-func part2(labmap Map, startpos Pos) int {
+/* func part2(labmap Map, startpos Pos) int {
 	visited := simulateGuardMovement(labmap, startpos)
 
 	loopCount := 0
@@ -162,6 +166,45 @@ func part2(labmap Map, startpos Pos) int {
 	}
 
 	return loopCount
+} */
+
+// kinda cheating but if i pay for 24 threads i get to use 24 threads, so deal with it!!!!
+func part2(labmap Map, startpos Pos) int {
+	visited := simulateGuardMovement(labmap, startpos)
+
+	loopCountChan := make(chan int, len(visited))
+
+	var waitGroup sync.WaitGroup
+
+	for pos := range visited {
+		if pos == startpos {
+			continue
+		}
+
+		waitGroup.Add(1)
+
+		go func(checkPos Pos) {
+			defer waitGroup.Done()
+
+			if isGuardStuckInLoop(labmap, startpos, checkPos) {
+				loopCountChan <- 1
+			} else {
+				loopCountChan <- 0
+			}
+		}(pos)
+	}
+
+	go func() {
+		waitGroup.Wait()
+		close(loopCountChan)
+	}()
+
+	totalLoops := 0
+	for count := range loopCountChan {
+		totalLoops += count
+	}
+
+	return totalLoops
 }
 
 func Run(part int, lines []string) int {
