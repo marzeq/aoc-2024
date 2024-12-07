@@ -3,6 +3,7 @@ package main
 import (
 	"os"
 	"strconv"
+	"time"
 
 	"github.com/marzeq/aoc-2024/day1"
 	"github.com/marzeq/aoc-2024/day2"
@@ -32,6 +33,7 @@ func main() {
 	lines := shared.GetLines(day)
 
 	var res int
+	tstart := time.Now()
 	switch day {
 	case 1:
 		res = day1.Run(part, lines)
@@ -50,6 +52,8 @@ func main() {
 	default:
 		panic("please update main.go")
 	}
+	dt := time.Now().Sub(tstart).Abs().Milliseconds()
 
 	println(res)
+	println("time took:", dt, "ms")
 }
