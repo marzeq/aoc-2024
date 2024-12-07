@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"os"
 	"strconv"
 
@@ -11,12 +10,13 @@ import (
 	"github.com/marzeq/aoc-2024/day4"
 	"github.com/marzeq/aoc-2024/day5"
 	"github.com/marzeq/aoc-2024/day6"
+	"github.com/marzeq/aoc-2024/day7"
 	"github.com/marzeq/aoc-2024/shared"
 )
 
 func main() {
 	if len(os.Args) < 3 {
-		panic(fmt.Sprintf("Usage: %s [day] [part]", os.Args[0]))
+		panic("Usage: go run . [day] [part]")
 	}
 
 	day, err := strconv.Atoi(os.Args[1])
@@ -45,9 +45,11 @@ func main() {
 		res = day5.Run(part, lines)
 	case 6:
 		res = day6.Run(part, lines)
+	case 7:
+		res = day7.Run(part, lines)
 	default:
-		res = 0
+		panic("please update main.go")
 	}
 
-	fmt.Println(res)
+	println(res)
 }
