@@ -6,8 +6,51 @@ import (
 	"strings"
 )
 
+type Vec2[T Number] struct {
+	X, Y T
+}
+
+func (vec Vec2[T]) Negate() Vec2[T] {
+	return Vec2[T]{-vec.X, -vec.Y}
+}
+
+type Point2[T Number] struct {
+	X, Y T
+}
+
+func (point Point2[T]) Transform(vec Vec2[T]) Point2[T] {
+	return Point2[T]{point.X + vec.X, point.Y + vec.Y}
+}
+
+func (point Point2[T]) DeltaVector(point2 Point2[T]) Vec2[T] {
+	return Vec2[T]{point.X - point2.X, point.Y - point2.Y}
+}
+
 type Number interface {
 	int | int8 | int16 | int32 | int64 | float32 | float64
+}
+
+func UniqueCombinations[T any](input []T, size int) [][]T {
+	result := [][]T{}
+	comb := make([]T, size)
+
+	var helper func(start, depth int)
+	helper = func(start, depth int) {
+		if depth == size {
+			temp := make([]T, size)
+			copy(temp, comb)
+			result = append(result, temp)
+			return
+		}
+
+		for i := start; i < len(input); i++ {
+			comb[depth] = input[i]
+			helper(i+1, depth+1)
+		}
+	}
+
+	helper(0, 0)
+	return result
 }
 
 func Abs[T Number](a T) T {
@@ -17,14 +60,14 @@ func Abs[T Number](a T) T {
 	return a
 }
 
-func Max[T Number](a T, b T) T {
+func Max[T Number](a, b T) T {
 	if a > b {
 		return a
 	}
 	return b
 }
 
-func Min[T Number](a T, b T) T {
+func Min[T Number](a, b T) T {
 	if a < b {
 		return a
 	}
