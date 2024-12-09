@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"os"
 	"strconv"
 	"time"
@@ -13,12 +14,20 @@ import (
 	"github.com/marzeq/aoc-2024/day6"
 	"github.com/marzeq/aoc-2024/day7"
 	"github.com/marzeq/aoc-2024/day8"
+	"github.com/marzeq/aoc-2024/day9"
 	"github.com/marzeq/aoc-2024/shared"
 )
 
+func printRes(res any, tstart time.Time) {
+	dt := time.Now().Sub(tstart).Abs().Milliseconds()
+
+	fmt.Println(res)
+	fmt.Println("time took:", dt, "ms")
+}
+
 func main() {
 	if len(os.Args) < 3 {
-		panic("Usage: go run . [day] [part]")
+		panic("Usage: go run . [day] [part (1|2)]")
 	}
 
 	day, err := strconv.Atoi(os.Args[1])
@@ -33,30 +42,27 @@ func main() {
 
 	lines := shared.GetLines(day)
 
-	var res int
 	tstart := time.Now()
 	switch day {
 	case 1:
-		res = day1.Run(part, lines)
+		printRes(day1.Run(part, lines), tstart)
 	case 2:
-		res = day2.Run(part, lines)
+		printRes(day2.Run(part, lines), tstart)
 	case 3:
-		res = day3.Run(part, lines)
+		printRes(day3.Run(part, lines), tstart)
 	case 4:
-		res = day4.Run(part, lines)
+		printRes(day4.Run(part, lines), tstart)
 	case 5:
-		res = day5.Run(part, lines)
+		printRes(day5.Run(part, lines), tstart)
 	case 6:
-		res = day6.Run(part, lines)
+		printRes(day6.Run(part, lines), tstart)
 	case 7:
-		res = day7.Run(part, lines)
+		printRes(day7.Run(part, lines), tstart)
 	case 8:
-		res = day8.Run(part, lines)
+		printRes(day8.Run(part, lines), tstart)
+	case 9:
+		printRes(day9.Run(part, lines), tstart)
 	default:
 		panic("please update main.go")
 	}
-	dt := time.Now().Sub(tstart).Abs().Milliseconds()
-
-	println(res)
-	println("time took:", dt, "ms")
 }
