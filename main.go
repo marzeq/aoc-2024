@@ -15,6 +15,7 @@ import (
 	"github.com/marzeq/aoc-2024/day7"
 	"github.com/marzeq/aoc-2024/day8"
 	"github.com/marzeq/aoc-2024/day9"
+	"github.com/marzeq/aoc-2024/day10"
 	"github.com/marzeq/aoc-2024/shared"
 )
 
@@ -62,6 +63,8 @@ func main() {
 		printRes(day8.Run(part, lines), tstart)
 	case 9:
 		printRes(day9.Run(part, lines), tstart)
+	case 10:
+		printRes(day10.Run(part, lines), tstart)
 	default:
 		panic("please update main.go")
 	}
