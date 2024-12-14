@@ -19,7 +19,11 @@ type Point2[T Number] struct {
 }
 
 func (point Point2[T]) Transform(vec Vec2[T]) Point2[T] {
-	return Point2[T]{point.X + vec.X, point.Y + vec.Y}
+	return point.TransformTimes(vec, 1)
+}
+
+func (point Point2[T]) TransformTimes(vec Vec2[T], t T) Point2[T] {
+	return Point2[T]{point.X + t*vec.X, point.Y + t*vec.Y}
 }
 
 func (point Point2[T]) DeltaVector(point2 Point2[T]) Vec2[T] {

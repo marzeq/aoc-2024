@@ -3,7 +3,10 @@ package main
 import (
 	"fmt"
 	"os"
+	"os/exec"
+	"runtime"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/marzeq/aoc-2024/day1"
@@ -11,6 +14,7 @@ import (
 	"github.com/marzeq/aoc-2024/day11"
 	"github.com/marzeq/aoc-2024/day12"
 	"github.com/marzeq/aoc-2024/day13"
+	"github.com/marzeq/aoc-2024/day14"
 	"github.com/marzeq/aoc-2024/day2"
 	"github.com/marzeq/aoc-2024/day3"
 	"github.com/marzeq/aoc-2024/day4"
@@ -22,11 +26,31 @@ import (
 	"github.com/marzeq/aoc-2024/shared"
 )
 
-func printRes(res any, tstart time.Time) {
+func copyToCB(text string) {
+	var cmd *exec.Cmd
+	switch runtime.GOOS {
+	case "darwin":
+		cmd = exec.Command("pbcopy")
+	case "windows":
+		cmd = exec.Command("clip")
+	case "linux":
+		if os.Getenv("WAYLAND_DISPLAY") != "" {
+			cmd = exec.Command("wl-copy")
+		} else {
+			cmd = exec.Command("xclip", "-selection", "clipboard")
+		}
+	}
+
+	cmd.Stdin = strings.NewReader(text)
+	cmd.Run()
+}
+
+func printRes(res int, tstart time.Time) {
 	dt := time.Now().Sub(tstart).Abs().Milliseconds()
 
 	fmt.Println(res)
 	fmt.Println("time took:", dt, "ms")
+	copyToCB(strconv.Itoa(res))
 }
 
 func main() {
@@ -74,6 +98,8 @@ func main() {
 		printRes(day12.Run(part, lines), tstart)
 	case 13:
 		printRes(day13.Run(part, lines), tstart)
+	case 14:
+		printRes(day14.Run(part, lines), tstart)
 	default:
 		panic("please update main.go")
 	}

@@ -18,4 +18,5 @@ time measured on a ryzen 5 5600g with 32gb of ram
 - day10: p1 (0 ms), p2 (1 ms)
 - day11: p1 (0 ms), p2 (17 ms)
 - day12: p1 (0 ms), p2 (6 ms)
-- day13: p1 (0 ms), p2 (0 ms) **i'm really proud of this one**
+- day13: p1 (0 ms), p2 (0 ms)
+- day14: p1 (0 ms), p2 (1127 ms)
