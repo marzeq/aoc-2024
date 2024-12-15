@@ -14,6 +14,17 @@ func (vec Vec2[T]) Negate() Vec2[T] {
 	return Vec2[T]{-vec.X, -vec.Y}
 }
 
+func (vec Vec2[T]) Equals(v2 Vec2[T]) bool {
+	return vec.X == v2.X && vec.Y == v2.Y
+}
+
+var (
+	VecUpOnce    = Vec2[int]{X: 0, Y: -1}
+	VecDownOnce  = Vec2[int]{X: 0, Y: 1}
+	VecLeftOnce  = Vec2[int]{X: -1, Y: 0}
+	VecRightOnce = Vec2[int]{X: 1, Y: 0}
+)
+
 type Point2[T Number] struct {
 	X, Y T
 }
@@ -32,6 +43,10 @@ func (point Point2[T]) DeltaVector(point2 Point2[T]) Vec2[T] {
 
 func (point Point2[T]) ToVec2() Vec2[T] {
 	return Vec2[T]{point.X, point.Y}
+}
+
+func (point Point2[T]) Equals(p2 Point2[T]) bool {
+	return point.X == p2.X && point.Y == p2.Y
 }
 
 type Matrix2x2[T Number] struct {
@@ -108,6 +123,16 @@ func Min[T Number](a, b T) T {
 		return a
 	}
 	return b
+}
+
+func Sign[T Number](a T) T {
+	if a > 0 {
+		return 1
+	} else if a == 0 {
+		return 0
+	}
+
+	return -1
 }
 
 func GetLines(day int) []string {
