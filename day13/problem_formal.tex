@@ -63,7 +63,7 @@ Because \( \det(A) \neq 0 \), we can apply Cramér's rule:
   m = \frac{\det\begin{pmatrix} a_x & P_x \\ b_x & P_y \end{pmatrix}}{\det(A)} = \frac{a_xP_y - b_xP_x}{\det(A)}
 \]
 
-Therefore, as long as \( n, m \tin \intpos \) (to satisfy the initial requirement) the value we are looking for is:
+Therefore, as long as \( n, m \in \intpos \) (to satisfy the initial requirement) the value we are looking for is:
 \[
   \frac{P_x(3b_y - b_x) + P_y(-3a_y + a_x)}{\det(A)}
 \]
@@ -80,17 +80,8 @@ Now, substitute into \( 3n + m \):
   3n + m = 3n + \frac{P_x - n a_x}{b_x} = \left( \frac{3 b_x - a_x}{b_x} \right) n + \frac{P_x}{b_x}
 \]
 
-The result is a linear function of the form \( f(n) = an + b \), where \( a, b > 0 \).
-
-We now want to minimize the expression:
-\[
-3n + m = \left( \frac{3 b_x - a_x}{b_x} \right) n + \frac{P_x}{b_x}
-\]
-subject to the constraint that \( m \) must be a positive integer. We already derived that:
-\[
-m = \frac{P_x - n a_x}{b_x}
-\]
-For \( m \) to be an integer, the numerator \( P_x - n a_x \) must be divisible by \( b_x \). This gives the following condition:
+The result is a linear function of the form \( f(n) = an + b \), where \( a, b > 0 \). We now want to minimize \( f(n) \) subject to the constraint that it must be a positive integer.\
+For that to be true, the numerator \( P_x - n a_x \) must be divisible by \( b_x \). This gives the following condition:
 \[
 P_x - n a_x \equiv 0 \pmod{b_x}
 \]
