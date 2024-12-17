@@ -1,8 +1,10 @@
 \documentclass{article}
 \usepackage{amsmath}
 \usepackage{amssymb}
+\setlength{\parindent}{0pt}
+\newcommand{\intpos}{\mathbb{N}_+}
 
-\title{Solution to the 3n+m optimisation problem}
+\title{Solution to the \(3n + m\) Optimisation Problem}
 \author{Author: marzeq}
 \date{Date: 2024-12-13}
 
@@ -14,97 +16,93 @@
 
 \textbf{Let:}
 \begin{itemize}
-  \item \( \mathbf{a} = (a_x, a_y) \) and \( \mathbf{b} = (b_x, b_y) \) be vectors with known values \( \in \mathbb{N_+} \).
-  \item \( \mathbf{p} = (p_x, p_y) \) be a point with known values \( \in \mathbb{N_+} \);
-  \item \( n,m \in \mathbb{N_+} \).
+  \item \( \mathbf{a} = (a_x, a_y) \) and \( \mathbf{b} = (b_x, b_y) \) be vectors with known values \( \in \intpos \).
+  \item \( \mathbf{P} = (P_x, P_y) \) be a point with known values \( \in \intpos \);
+  \item \( n,m \in \intpos \).
 \end{itemize}
+
 The system of equations is as follows:
 \[
-na_x + mb_x = p_x
+  \begin{cases}
+  a_xn + b_xm = P_x \\
+  a_yn + b_ym = P_y
+  \end{cases}
 \]
-\[
-na_y + mb_y = p_y
-\]
-We are tasked with finding the lowest value of \( 3n+m \in \mathbb{N_+} \).
+
+We are tasked with finding the smallest value of \( 3n + m \) such that \( n, m \in \intpos \).
 
 \section*{Solution}
 
 \textbf{Let:}
-\[
-A = \begin{pmatrix}
-a_x & a_y \\
-b_x & b_y
-\end{pmatrix}
+  \[
+  A = \begin{pmatrix}
+  a_x & a_y \\
+  b_x & b_y
+  \end{pmatrix}
 \]
+
 Rewrite the system as a matrix equation:
 \[
-A \begin{pmatrix}
-n \\
-m
-\end{pmatrix}
-= \begin{pmatrix}
-p_x \\
-p_y
-\end{pmatrix}
+  A \begin{pmatrix}
+  n \\
+  m
+  \end{pmatrix}
+  = \begin{pmatrix}
+  P_x \\
+  P_y
+  \end{pmatrix}
 \]
 
 \subsection*{Case 1: If \( \det(A) \neq 0 \)}
 
-Because \( \det(A) \neq 0 \), we can rewrite to move \(\begin{pmatrix}n\\ m\end{pmatrix}\) to the LHS:
+Because \( \det(A) \neq 0 \), we can apply Cramér's rule:
 \[
-\begin{pmatrix}
-n \\
-m
-\end{pmatrix}
-= A^{-1} \begin{pmatrix}
-p_x \\
-p_y
-\end{pmatrix}
-\]
-Then:
-\[
-n = \frac{b_yp_x - a_yp_y}{\det(A)}
+  n = \frac{\det\begin{pmatrix} P_x & a_y \\ P_y & b_y \end{pmatrix}}{\det(A)} = \frac{b_yP_x - a_yP_y}{\det(A)}
 \]
 \[
-m = \frac{-b_xp_x + a_xp_y}{\det(A)}
+  m = \frac{\det\begin{pmatrix} a_x & P_x \\ b_x & P_y \end{pmatrix}}{\det(A)} = \frac{a_xP_y - b_xP_x}{\det(A)}
 \]
-These values are guaranteed to give the lowest possible value of \( 3n+m \), as they are the only pair that satisfies the system.
-If \( n,m \notin \mathbb{N_+} \), there is no solution because these do not satisfy the initial requirement, and we cannot pick another pair.
+
+Therefore, as long as \( n, m \tin \intpos \) (to satisfy the initial requirement) the value we are looking for is:
+\[
+  \frac{P_x(3b_y - b_x) + P_y(-3a_y + a_x)}{\det(A)}
+\]
 
 \subsection*{Case 2: If \( \det(A) = 0 \)}
 
-\subsubsection*{2.1 No pairs \( n, m \) satisfy the system}
-
-For this to happen, \( \mathbf{p} \) must not satisfy \( \text{rank}([A | \mathbf{p}]) = \text{rank}(A) \).
-
-\subsubsection*{2.2 Infinitely many pairs \( n, m \) satisfy the system}
-
-Assuming that \( \mathbf{p} \) satisfies \( \text{rank}([A | \mathbf{p}]) = \text{rank}(A) \), we first check whether there exists at least one pair \( (n, m) \) where both \( n \) and \( m \) are in \( \mathbb{N}_+ \). This can be done by checking the particular solution \( \mathbf{v_p} = \begin{pmatrix} n_p \\ m_p \end{pmatrix} \).
-\begin{itemize}
-    \item If both \( n_p \) and \( m_p \) are positive integers, we proceed to find the general solution.
-    \item If either \( n_p \) or \( m_p \) is not a positive integer, the system has no solution \( n,m \in \mathbb{N}_+ \).
-\end{itemize}
-If a valid pair \( (n_p, m_p) \) is found, the general solution is given by:
+We can rewrite \( m \) in terms of \( n \) (using the first equation, for example):
 \[
-\mathbf{v} = \mathbf{v_p} + t\mathbf{v_n}
+  m = \frac{P_x - n a_x}{b_x}
 \]
-where \( \mathbf{v_p} \) is a particular solution, \( \mathbf{v_n} \) is a vector in the null space of \( A \), and \( t \in \mathbb{Z} \).
-The objective function to minimize is:
+
+Now, substitute into \( 3n + m \):
 \[
-f(t) = 3n_p + m_p + t(3n_n + m_n)
+  3n + m = 3n + \frac{P_x - n a_x}{b_x} = \left( \frac{3 b_x - a_x}{b_x} \right) n + \frac{P_x}{b_x}
 \]
-where \( (n_p, m_p) \) is a particular solution and \( (n_n, m_n) \) is a basis vector for the null space.
-To minimize \( f(t) \), perform the following steps:
 
-\begin{enumerate}
-    \item Compute \( 3n_n + m_n \). If it equals 0, then \( f(t) \) is constant, and all solutions have the same value. In this case, yield all pairs \( n,m \).
-    
-    \item If \( 3n_n + m_n \neq 0 \), find the integer \( t \) that minimizes \( f(t) \). This depends on the sign of \( 3n_n + m_n \):
-    \begin{itemize}
-        \item If \( 3n_n + m_n > 0 \), decrease \( t \) until the result no longer satisfies the integer constraint (i.e., \( n_p + t n_n > 0 \) and \( m_p + t m_n > 0 \)). Yield that pair.
-        \item If \( 3n_n + m_n < 0 \), increase \( t \) similarly and yield the resulting pair.
-    \end{itemize}
-\end{enumerate}
+The result is a linear function of the form \( f(n) = an + b \), where \( a, b > 0 \).
 
+We now want to minimize the expression:
+\[
+3n + m = \left( \frac{3 b_x - a_x}{b_x} \right) n + \frac{P_x}{b_x}
+\]
+subject to the constraint that \( m \) must be a positive integer. We already derived that:
+\[
+m = \frac{P_x - n a_x}{b_x}
+\]
+For \( m \) to be an integer, the numerator \( P_x - n a_x \) must be divisible by \( b_x \). This gives the following condition:
+\[
+P_x - n a_x \equiv 0 \pmod{b_x}
+\]
+or equivalently:
+\[
+n a_x \equiv P_x \pmod{b_x}
+\]
+So, we need to find the smallest \( n \in \intpos \) that satisfies the linear congruence:
+\[
+n a_x \equiv P_x \pmod{b_x}
+\]
+
+Thus, the value we are looking for is \( f(n) \) of the previously mentioned \( n \).
 \end{document}
 
